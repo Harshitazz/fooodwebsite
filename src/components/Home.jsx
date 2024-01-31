@@ -116,12 +116,12 @@ const Home = () => {
                        <Link  to='/about'>About Us</Link>
                     </li>
                     <li>
-                            <Link to='/dailyrecipe'>Receipe recommendor</Link>
+                            <Link to='/dailyrecipe'>Recipe recommendor</Link>
                           </li>
                         
                       
                       <li>
-                            <a href="contact.html">Contact</a>
+                            <Link to='/Ngoforms' >Ngo Form</Link>
                           </li>
                           <li>
                             <Link to='/blog'>Blog Post</Link>
