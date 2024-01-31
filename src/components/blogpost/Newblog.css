@@ -1,0 +1,50 @@
+body {
+  background-color: rgb(237, 229, 229, 0.7);
+}
+.new-post-container {
+  background: rgba(203, 200, 204, 0.6);
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 50%;
+  margin: 20px auto;
+  align-items: center;
+}
+
+.new-post-container h2 {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 3rem;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.form-group {
+  margin: 20px;
+}
+
+label {
+  font-weight: bold;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgb(119, 49, 124);
+  border-radius: 5px;
+}
+
+.submit-button {
+  background-color: #3b023f;
+  margin: 0 1rem;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
