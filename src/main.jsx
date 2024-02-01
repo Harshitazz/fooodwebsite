@@ -11,7 +11,8 @@ import Chatbot from './components/ChatBot/Chatbot.jsx';
 import Final from './components/reciperecomendor/final.jsx';
 import Login from './components/user/login.jsx';
 import SignUp from './components/user/signup.jsx';
-import Auth from './components/user/Auth.jsx';
+import Ngoform from './components/Ngoforms.jsx';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
       },
       {path:"/sign-in" ,element:<Login/>},
       {path:"/sign-up" ,element:<SignUp/>},
-      
+      {path:"/Ngoforms" ,element:<Ngoform/>},
       
     ],
   },
