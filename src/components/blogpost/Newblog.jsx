@@ -1,61 +1,67 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./Newblog.css"; // Import CSS file for styling
+import { useNavigate } from "react-router-dom";
+import { server } from "../../App";
 
-const Newblog = ({ onClose }) => {
-  const [formData, setFormData] = useState({
-    title: "",
-    content: "",
-    author: "",
-    image: null, // Add image property to formData
-  });
+const Newblog = () => {
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value, type } = e.target;
-    // Handle file input separately
-    if (type === "file") {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: e.target.files[0], // Only take the first file if multiple files are selected
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
-  };
+  const titleRef = useRef();
+  const ingredientsRef = useRef();
+  const procedureRef = useRef();
+  const imageRef = useRef();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add code to handle form submission (e.g., send data to server)
-    console.log(formData);
-    onClose(); // Close the form after submission
+    const formData = new FormData();
+    formData.append("title", titleRef.current.value);
+    const ingredientsList = ingredientsRef.current.value.split(" ");
+
+    ingredientsList.forEach((ingredient, index) => {
+      formData.append(`ingredients[${index}]`, ingredient);
+    });
+
+    formData.append("procedure", procedureRef.current.value);
+    formData.append("image", imageRef.current.files[0]);
+    console.log(imageRef.current.files[0]);
+
+    try {
+      const response = await fetch(`${server}/user/create-post`, {
+        method: "POST",
+        credentials: "include",
+
+        body: formData,
+      });
+
+      const json = await response.json();
+      console.log(json);
+
+      if (json.success) {
+        console.log("success");
+        navigate("/blog");
+      } else {
+        console.log("not successed");
+      }
+    } catch (error) {
+      console.log("Some error occurred !", error);
+    }
   };
 
   return (
     <div className="new-post-container">
       <h2>Create a New Blog Post</h2>
-      <form className="new-post-form" onSubmit={handleSubmit}>
+      <form
+        className="new-post-form"
+        encType="multipart/form-data"
+        onSubmit={handleSubmit}
+      >
         <div className="form-group">
           <label htmlFor="title">Title:</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-          />
+          <input type="text" id="title" name="title" ref={titleRef} required />
         </div>
         <div className="form-group">
-          <label htmlFor="content">Content:</label>
-          <textarea
-            id="content"
-            name="content"
-            value={formData.content}
-            onChange={handleChange}
-            required
-          />
+          <label htmlFor="content">Procedure:</label>
+          <textarea id="content" name="content" ref={procedureRef} required />
         </div>
         <div className="form-group">
           <label htmlFor="author">Ingredients:</label>
@@ -63,8 +69,7 @@ const Newblog = ({ onClose }) => {
             type="text"
             id="author"
             name="author"
-            value={formData.author}
-            onChange={handleChange}
+            ref={ingredientsRef}
             required
           />
         </div>
@@ -77,7 +82,7 @@ const Newblog = ({ onClose }) => {
               id="image"
               name="image"
               accept="image/*" // Specify accepted file types (images in this case)
-              onChange={handleChange}
+              ref={imageRef}
             />
           </div>
         </div>
